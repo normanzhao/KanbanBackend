@@ -2,118 +2,118 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
 using KanbanBackend.Models;
 
 namespace KanbanBackend.Controllers
 {
-    public class projectsController : Controller
+    public class projectsController : ApiController
     {
         private KanbanDBEntities db = new KanbanDBEntities();
 
-        // GET: projects
-        public async Task<ActionResult> Index()
+        // GET: api/projects
+        public IQueryable<project> Getprojects()
         {
-            return View(await db.projects.ToListAsync());
+            return db.projects.ToList()
+            .Select(p => new project
+            {
+                id = p.id,
+                acronym = p.acronym,
+                title = p.title,
+                description = p.description
+            }).AsQueryable();
         }
 
-        // GET: projects/Details/5
-        public async Task<ActionResult> Details(int? id)
+        // GET: api/projects/5
+        [ResponseType(typeof(project))]
+        public async Task<IHttpActionResult> Getproject(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             project project = await db.projects.FindAsync(id);
             if (project == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(project);
+
+            return Ok(project);
         }
 
-        // GET: projects/Create
-        public ActionResult Create()
+        // PUT: api/projects/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> Putproject(int id, project project)
         {
-            return View();
-        }
-
-        // POST: projects/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,title,acronym,description")] project project)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.projects.Add(project);
+                return BadRequest(ModelState);
+            }
+
+            if (id != project.id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(project).State = EntityState.Modified;
+
+            try
+            {
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!projectExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            return View(project);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: projects/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        // POST: api/projects
+        [ResponseType(typeof(project))]
+        public async Task<IHttpActionResult> Postproject(project projectInput)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest(ModelState);
             }
+
+            project p = new project();
+            p.id = projectInput.id;
+            p.acronym = projectInput.acronym;
+            p.title = projectInput.title;
+            p.description = projectInput.description;
+
+
+            db.projects.Add(p);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = p.id }, p);
+        }
+
+        // DELETE: api/projects/5
+        [ResponseType(typeof(project))]
+        public async Task<IHttpActionResult> Deleteproject(int id)
+        {
             project project = await db.projects.FindAsync(id);
             if (project == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
-            return View(project);
-        }
 
-        // POST: projects/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,title,acronym,description")] project project)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(project).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(project);
-        }
-
-        // GET: projects/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            project project = await db.projects.FindAsync(id);
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-            return View(project);
-        }
-
-        // POST: projects/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            project project = await db.projects.FindAsync(id);
             db.projects.Remove(project);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return Ok(project);
         }
 
         protected override void Dispose(bool disposing)
@@ -123,6 +123,11 @@ namespace KanbanBackend.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool projectExists(int id)
+        {
+            return db.projects.Count(e => e.id == id) > 0;
         }
     }
 }
