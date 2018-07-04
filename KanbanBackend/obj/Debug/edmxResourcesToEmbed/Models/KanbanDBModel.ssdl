@@ -7,7 +7,7 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="p_id" Type="int" Nullable="false" />
     <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
-    <Property Name="priority" Type="int" />
+    <Property Name="priority" Type="int" Nullable="false" />
     <Property Name="title" Type="varchar" MaxLength="35" Nullable="false" />
     <Property Name="description" Type="varchar(max)" />
   </EntityType>

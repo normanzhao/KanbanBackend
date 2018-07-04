@@ -96,6 +96,7 @@ C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\Microsoft.AI.D
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\Microsoft.AI.Web.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.csprojAssemblyReference.cache
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.csproj.CoreCompileInputs.cache
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.csproj.CopyComplete
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.dll

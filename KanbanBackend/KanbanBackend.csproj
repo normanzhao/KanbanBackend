@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{26A21548-94EC-4522-BA57-24EBD2EE7B03}</ProjectGuid>
+    <ProjectGuid>{8A45EF7A-0C9B-49AC-B3EB-AB901C3418D9}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -213,8 +213,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\KanbanDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KanbanDBModel.edmx</DependentUpon>
       <LastGenOutput>KanbanDBModel.Context.cs</LastGenOutput>
+      <DependentUpon>KanbanDBModel.edmx</DependentUpon>
     </Content>
     <Content Include="Models\KanbanDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -292,9 +292,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3934</DevelopmentServerPort>
+          <DevelopmentServerPort>44331</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3934/</IISUrl>
+          <IISUrl>http://localhost:44331/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

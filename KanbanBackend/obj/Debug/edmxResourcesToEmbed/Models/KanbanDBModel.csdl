@@ -7,7 +7,7 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="p_id" Type="Int32" Nullable="false" />
     <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="priority" Type="Int32" />
+    <Property Name="priority" Type="Int32" Nullable="false" />
     <Property Name="title" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="project" Relationship="Self.FK__items__p_id__1FCDBCEB" FromRole="items" ToRole="projects" />
