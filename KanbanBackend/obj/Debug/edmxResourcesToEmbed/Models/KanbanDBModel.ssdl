@@ -10,6 +10,7 @@
     <Property Name="priority" Type="int" Nullable="false" />
     <Property Name="title" Type="varchar" MaxLength="35" Nullable="false" />
     <Property Name="description" Type="varchar(max)" />
+    <Property Name="status" Type="varchar" MaxLength="15" Nullable="false" />
   </EntityType>
   <EntityType Name="projects">
     <Key>
@@ -20,24 +21,8 @@
     <Property Name="acronym" Type="varchar" MaxLength="3" Nullable="false" />
     <Property Name="description" Type="varchar(max)" />
   </EntityType>
-  <Association Name="FK__items__p_id__1FCDBCEB">
-    <End Role="projects" Type="Self.projects" Multiplicity="1" />
-    <End Role="items" Type="Self.items" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="projects">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="items">
-        <PropertyRef Name="p_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="KanbanDBModelStoreContainer">
     <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="projects" EntityType="Self.projects" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__items__p_id__1FCDBCEB" Association="Self.FK__items__p_id__1FCDBCEB">
-      <End Role="projects" EntitySet="projects" />
-      <End Role="items" EntitySet="items" />
-    </AssociationSet>
   </EntityContainer>
 </Schema>

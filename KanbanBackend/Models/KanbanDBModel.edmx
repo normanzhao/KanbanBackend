@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KanbanDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KanbanDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="items">
           <Key>
             <PropertyRef Name="id" />
@@ -15,6 +15,7 @@
           <Property Name="priority" Type="int" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="35" Nullable="false" />
           <Property Name="description" Type="varchar(max)" />
+          <Property Name="status" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="projects">
           <Key>
@@ -25,28 +26,11 @@
           <Property Name="acronym" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="description" Type="varchar(max)" />
         </EntityType>
-        <Association Name="FK__items__p_id__1FCDBCEB">
-          <End Role="projects" Type="Self.projects" Multiplicity="1" />
-          <End Role="items" Type="Self.items" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="projects">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="items">
-              <PropertyRef Name="p_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="KanbanDBModelStoreContainer">
           <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="projects" EntityType="Self.projects" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__items__p_id__1FCDBCEB" Association="Self.FK__items__p_id__1FCDBCEB">
-            <End Role="projects" EntitySet="projects" />
-            <End Role="items" EntitySet="items" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KanbanDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -61,6 +45,7 @@
           <Property Name="title" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="project" Relationship="Self.FK__items__p_id__1FCDBCEB" FromRole="items" ToRole="projects" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="project">
           <Key>
@@ -101,6 +86,7 @@
           <EntitySetMapping Name="items">
             <EntityTypeMapping TypeName="KanbanDBModel.item">
               <MappingFragment StoreEntitySet="items">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="p_id" ColumnName="p_id" />
                 <ScalarProperty Name="type" ColumnName="type" />

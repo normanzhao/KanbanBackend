@@ -89,7 +89,7 @@ namespace KanbanBackend.Controllers
 
             project p = new project();
             p.id = projectInput.id;
-            p.acronym = projectInput.acronym;
+            p.acronym = projectInput.acronym.ToUpper();
             p.title = projectInput.title;
             p.description = projectInput.description;
 

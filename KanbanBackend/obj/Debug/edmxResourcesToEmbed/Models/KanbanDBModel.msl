@@ -4,6 +4,7 @@
     <EntitySetMapping Name="items">
       <EntityTypeMapping TypeName="KanbanDBModel.item">
         <MappingFragment StoreEntitySet="items">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="p_id" ColumnName="p_id" />
           <ScalarProperty Name="type" ColumnName="type" />

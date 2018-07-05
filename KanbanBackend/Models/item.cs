@@ -20,6 +20,7 @@ namespace KanbanBackend.Models
         public int priority { get; set; }
         public string title { get; set; }
         public string description { get; set; }
+        public string status { get; set; }
     
         public virtual project project { get; set; }
     }

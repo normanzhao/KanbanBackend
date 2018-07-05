@@ -30,6 +30,7 @@ namespace KanbanBackend.Controllers
                 title = i.title,
                 description = i.description
             }).AsQueryable();
+
         }
 
         // GET: api/items/5
@@ -82,17 +83,26 @@ namespace KanbanBackend.Controllers
 
         // POST: api/items
         [ResponseType(typeof(item))]
-        public async Task<IHttpActionResult> Postitem(item item)
+        public async Task<IHttpActionResult> Postitem(item itemInput)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.items.Add(item);
+            item i = new item();
+            i.id = itemInput.id;
+            i.p_id = itemInput.p_id;
+            i.type = itemInput.type;
+            i.priority = itemInput.priority;
+            i.title = itemInput.title;
+            i.description = itemInput.description;
+            i.status = itemInput.status;
+
+            db.items.Add(i);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = item.id }, item);
+            return CreatedAtRoute("DefaultApi", new { id = i.id }, i);
         }
 
         // DELETE: api/items/5
