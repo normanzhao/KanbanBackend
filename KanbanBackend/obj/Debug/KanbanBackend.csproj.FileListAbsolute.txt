@@ -100,3 +100,4 @@ C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBa
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.csproj.CopyComplete
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.pdb
+C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\obj\Debug\KanbanBackend.csprojAssemblyReference.cache

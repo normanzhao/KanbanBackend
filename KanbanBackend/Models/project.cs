@@ -24,6 +24,7 @@ namespace KanbanBackend.Models
         public string title { get; set; }
         public string acronym { get; set; }
         public string description { get; set; }
+        public string status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<item> items { get; set; }

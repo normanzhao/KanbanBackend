@@ -13,6 +13,7 @@ using KanbanBackend.Models;
 
 namespace KanbanBackend.Controllers
 {
+    [RoutePrefix("api/items")]
     public class itemsController : ApiController
     {
         private KanbanDBEntities db = new KanbanDBEntities();
@@ -28,57 +29,27 @@ namespace KanbanBackend.Controllers
                 type = i.type,
                 priority = i.priority,
                 title = i.title,
-                description = i.description
+                description = i.description,
+                status = i.status
             }).AsQueryable();
 
         }
 
-        // GET: api/items/5
-        [ResponseType(typeof(item))]
-        public async Task<IHttpActionResult> Getitem(int id)
+        // GET: api/items/status
+        [Route("{status}")]
+        public IQueryable<item> Getitems(string status)
         {
-            item item = await db.items.FindAsync(id);
-            if (item == null)
+            return db.items.ToList().Where(i => i.status == status)
+            .Select(i => new item
             {
-                return NotFound();
-            }
+                id = i.id,
+                p_id = i.p_id,
+                type = i.type,
+                priority = i.priority,
+                title = i.title,
+                description = i.description
+            }).AsQueryable();
 
-            return Ok(item);
-        }
-
-        // PUT: api/items/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putitem(int id, item item)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != item.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(item).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!itemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/items
@@ -103,22 +74,6 @@ namespace KanbanBackend.Controllers
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = i.id }, i);
-        }
-
-        // DELETE: api/items/5
-        [ResponseType(typeof(item))]
-        public async Task<IHttpActionResult> Deleteitem(int id)
-        {
-            item item = await db.items.FindAsync(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            db.items.Remove(item);
-            await db.SaveChangesAsync();
-
-            return Ok(item);
         }
 
         protected override void Dispose(bool disposing)

@@ -20,6 +20,7 @@
     <Property Name="title" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="acronym" Type="varchar" MaxLength="3" Nullable="false" />
     <Property Name="description" Type="varchar(max)" />
+    <Property Name="status" Type="varchar" MaxLength="15" Nullable="false" />
   </EntityType>
   <EntityContainer Name="KanbanDBModelStoreContainer">
     <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />

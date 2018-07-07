@@ -25,6 +25,7 @@
           <Property Name="title" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="acronym" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="description" Type="varchar(max)" />
+          <Property Name="status" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityContainer Name="KanbanDBModelStoreContainer">
           <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
@@ -56,6 +57,7 @@
           <Property Name="acronym" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="items" Relationship="Self.FK__items__p_id__1FCDBCEB" FromRole="projects" ToRole="items" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__items__p_id__1FCDBCEB">
           <End Role="projects" Type="Self.project" Multiplicity="1" />
@@ -99,6 +101,7 @@
           <EntitySetMapping Name="projects">
             <EntityTypeMapping TypeName="KanbanDBModel.project">
               <MappingFragment StoreEntitySet="projects">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="acronym" ColumnName="acronym" />

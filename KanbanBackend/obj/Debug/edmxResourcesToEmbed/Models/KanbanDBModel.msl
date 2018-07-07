@@ -17,6 +17,7 @@
     <EntitySetMapping Name="projects">
       <EntityTypeMapping TypeName="KanbanDBModel.project">
         <MappingFragment StoreEntitySet="projects">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="acronym" ColumnName="acronym" />

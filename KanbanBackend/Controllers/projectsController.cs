@@ -13,6 +13,7 @@ using KanbanBackend.Models;
 
 namespace KanbanBackend.Controllers
 {
+    [RoutePrefix("api/projects")]
     public class projectsController : ApiController
     {
         private KanbanDBEntities db = new KanbanDBEntities();
@@ -26,56 +27,25 @@ namespace KanbanBackend.Controllers
                 id = p.id,
                 acronym = p.acronym,
                 title = p.title,
-                description = p.description
+                description = p.description,
+                status = p.status
             }).AsQueryable();
         }
 
-        // GET: api/projects/5
+        // GET: api/projects/status
+        [Route("{status}")]
         [ResponseType(typeof(project))]
-        public async Task<IHttpActionResult> Getproject(int id)
+        public IQueryable<project> Getprojects(string status)
         {
-            project project = await db.projects.FindAsync(id);
-            if (project == null)
+            return db.projects.ToList().Where(p => p.status == status)
+            .Select(p => new project
             {
-                return NotFound();
-            }
-
-            return Ok(project);
-        }
-
-        // PUT: api/projects/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putproject(int id, project project)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != project.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(project).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!projectExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+                id = p.id,
+                acronym = p.acronym,
+                title = p.title,
+                description = p.description,
+                status = p.status
+            }).AsQueryable();
         }
 
         // POST: api/projects
@@ -98,22 +68,6 @@ namespace KanbanBackend.Controllers
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = p.id }, p);
-        }
-
-        // DELETE: api/projects/5
-        [ResponseType(typeof(project))]
-        public async Task<IHttpActionResult> Deleteproject(int id)
-        {
-            project project = await db.projects.FindAsync(id);
-            if (project == null)
-            {
-                return NotFound();
-            }
-
-            db.projects.Remove(project);
-            await db.SaveChangesAsync();
-
-            return Ok(project);
         }
 
         protected override void Dispose(bool disposing)
