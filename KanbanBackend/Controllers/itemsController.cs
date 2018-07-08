@@ -47,7 +47,8 @@ namespace KanbanBackend.Controllers
                 type = i.type,
                 priority = i.priority,
                 title = i.title,
-                description = i.description
+                description = i.description,
+                status = i.status
             }).AsQueryable();
 
         }

@@ -62,6 +62,7 @@ namespace KanbanBackend.Controllers
             p.acronym = projectInput.acronym.ToUpper();
             p.title = projectInput.title;
             p.description = projectInput.description;
+            p.status = projectInput.status;
 
 
             db.projects.Add(p);
