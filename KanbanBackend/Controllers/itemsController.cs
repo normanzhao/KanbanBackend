@@ -19,37 +19,36 @@ namespace KanbanBackend.Controllers
         private KanbanDBEntities db = new KanbanDBEntities();
 
         // GET: api/items
-        public IQueryable<item> Getitems()
+        public IQueryable<acronymedItem> Getitems()
         {
-            return db.items.ToList()
-            .Select(i => new item
+            return db.items.ToList().Join(db.projects, i => i.p_id, p => p.id, (it,pr)=> new acronymedItem
             {
-                id = i.id,
-                p_id = i.p_id,
-                type = i.type,
-                priority = i.priority,
-                title = i.title,
-                description = i.description,
-                status = i.status
+                id = it.id,
+                type = it.type,
+                priority = it.priority,
+                title = it.title,
+                description = it.description,
+                status = it.status,
+                acronym = pr.acronym
             }).AsQueryable();
 
         }
 
         // GET: api/items/status
         [Route("{status}")]
-        public IQueryable<item> Getitems(string status)
+        public IQueryable<acronymedItem> Getitems(string status)
         {
-            return db.items.ToList().Where(i => i.status == status)
-            .Select(i => new item
+            return db.items.ToList().Where(i => i.status == status).Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItem
             {
-                id = i.id,
-                p_id = i.p_id,
-                type = i.type,
-                priority = i.priority,
-                title = i.title,
-                description = i.description,
-                status = i.status
+                id = it.id,
+                type = it.type,
+                priority = it.priority,
+                title = it.title,
+                description = it.description,
+                status = it.status,
+                acronym = pr.acronym
             }).AsQueryable();
+
 
         }
 
