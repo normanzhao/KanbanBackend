@@ -76,6 +76,18 @@ namespace KanbanBackend.Controllers
             return CreatedAtRoute("DefaultApi", new { id = i.id }, i);
         }
 
+        // PUT: api/items/update
+        [Route("update")]
+        public void Putitems(acronymedItem itemInput)
+        {
+            item i = db.items.Find(itemInput.id);
+            i.type = itemInput.type;
+            i.priority = itemInput.priority;
+            i.description = itemInput.description;
+            i.status = itemInput.status;
+            db.SaveChanges();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

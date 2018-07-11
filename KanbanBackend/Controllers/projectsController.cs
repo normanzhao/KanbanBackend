@@ -71,6 +71,16 @@ namespace KanbanBackend.Controllers
             return CreatedAtRoute("DefaultApi", new { id = p.id }, p);
         }
 
+        // PUT: api/projects/update
+        [Route("update")]
+        public void Putprojects(project projectInput)
+        {
+            project p = db.projects.Find(projectInput.id);
+            p.description = projectInput.description;
+            p.status = projectInput.status;
+            db.SaveChanges();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
