@@ -76,7 +76,7 @@ namespace KanbanBackend.Controllers
             return CreatedAtRoute("DefaultApi", new { id = i.id }, i);
         }
 
-        // POST: api/items/update
+        // POST: api/items/update for item updates
         [Route("update")]
         public async Task<IHttpActionResult> Updateitem(acronymedItem itemInput)
         {
@@ -118,7 +118,48 @@ namespace KanbanBackend.Controllers
                     throw;
                 }
             }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
+        //POST: api/items/update for status updates only
+        [Route("status-update")]
+        public async Task<IHttpActionResult> Updateitem(statusedItem itemInput)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            item i = db.items.Find(itemInput.id);
+            i.status = itemInput.status;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (i.id != itemInput.id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(i).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!itemExists(itemInput.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
 

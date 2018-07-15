@@ -96,6 +96,10 @@ namespace KanbanBackend.Controllers
             }
 
             db.Entry(p).State = EntityState.Modified;
+            foreach (item i in db.items.ToList().Where(i => i.p_id == projectInput.id))
+            {
+                i.status = projectInput.status;
+            }
 
             try
             {
