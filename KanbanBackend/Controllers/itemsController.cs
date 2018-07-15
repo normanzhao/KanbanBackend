@@ -76,17 +76,52 @@ namespace KanbanBackend.Controllers
             return CreatedAtRoute("DefaultApi", new { id = i.id }, i);
         }
 
-        // PUT: api/items/update
+        // POST: api/items/update
         [Route("update")]
-        public void Putitems(acronymedItem itemInput)
+        public async Task<IHttpActionResult> Updateitem(acronymedItem itemInput)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             item i = db.items.Find(itemInput.id);
             i.type = itemInput.type;
             i.priority = itemInput.priority;
             i.description = itemInput.description;
             i.status = itemInput.status;
-            db.SaveChanges();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (i.id != itemInput.id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(i).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!itemExists(itemInput.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -71,14 +71,49 @@ namespace KanbanBackend.Controllers
             return CreatedAtRoute("DefaultApi", new { id = p.id }, p);
         }
 
-        // PUT: api/projects/update
+        // POST: api/projects/update
         [Route("update")]
-        public void Putprojects(project projectInput)
+        public async Task<IHttpActionResult> Updateproject(statusedProject projectInput)
         {
+            System.Diagnostics.Debug.Write("\n\n\n\nasdasdasdasd\n\n");
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             project p = db.projects.Find(projectInput.id);
-            p.description = projectInput.description;
             p.status = projectInput.status;
-            db.SaveChanges();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (p.id != projectInput.id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(p).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!projectExists(projectInput.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)
