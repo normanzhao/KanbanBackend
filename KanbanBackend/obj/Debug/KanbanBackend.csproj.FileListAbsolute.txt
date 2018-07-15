@@ -70,17 +70,14 @@ C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Hel
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Http.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Http.WebHost.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Mvc.dll
-C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Optimization.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Razor.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.WebPages.Deployment.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.WebPages.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.WebPages.Razor.dll
-C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\WebGrease.dll
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\EntityFramework.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\EntityFramework.SqlServer.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Helpers.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Mvc.xml
-C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Optimization.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.Razor.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.WebPages.xml
 C:\Users\nadjatee\Documents\repos\KanbanBackend\KanbanBackend\bin\System.Web.WebPages.Deployment.xml
