@@ -33,6 +33,31 @@ namespace KanbanBackend.Controllers
         }
 
         // GET: api/projects/status
+        [Route("released")]
+        [ResponseType(typeof(project))]
+        public IQueryable<releasedProject> Getreleased()
+        {
+            return db.projects.ToList().Where(p => p.status == "released")
+            .Select(p => new releasedProject
+            {
+                id = p.id,
+                acronym = p.acronym,
+                title = p.title,
+                description = p.description,
+                status = p.status,
+                items = db.items.ToList().Where(i => i.p_id == p.id).Select(i => new item
+                {
+                    id = i.id,
+                    type = i.type,
+                    priority = i.priority,
+                    title = i.title,
+                    description = i.description,
+                    status = i.status
+                }).ToArray()
+            }).AsQueryable();
+        }
+
+        // GET: api/projects/status
         [Route("{status}")]
         [ResponseType(typeof(project))]
         public IQueryable<project> Getprojects(string status)
