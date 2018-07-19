@@ -48,6 +48,7 @@ namespace KanbanBackend.Controllers
                 items = db.items.ToList().Where(i => i.p_id == p.id).Select(i => new item
                 {
                     id = i.id,
+                    p_id = i.p_id,
                     type = i.type,
                     priority = i.priority,
                     title = i.title,

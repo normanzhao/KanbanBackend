@@ -303,6 +303,7 @@
     <Compile Include="Models\project.cs">
       <DependentUpon>KanbanDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\releasedProject.cs" />
     <Compile Include="Models\statusedItem.cs" />
     <Compile Include="Models\statusedProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
