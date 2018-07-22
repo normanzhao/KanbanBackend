@@ -1,0 +1,13 @@
+diff a/KanbanBackend/Controllers/projectsController.cs b/KanbanBackend/Controllers/projectsController.cs	(rejected hunks)
+@@ -19,9 +19,9 @@
+         private KanbanDBEntities db = new KanbanDBEntities();
+ 
+         // GET: api/projects
+-        public IQueryable<project> Getprojects()
++        public List<project> Getprojects()
+         {
+-            return db.projects.ToList()
++            return db.projects
+             .Select(p => new project
+             {
+                 id = p.id,

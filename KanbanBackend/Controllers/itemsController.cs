@@ -89,7 +89,6 @@ namespace KanbanBackend.Controllers
             i.type = itemInput.type;
             i.priority = itemInput.priority;
             i.description = itemInput.description;
-            i.status = itemInput.status;
 
             if (!ModelState.IsValid)
             {
