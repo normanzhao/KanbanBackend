@@ -10,7 +10,7 @@ namespace KanbanBackendUnitTests
     public class itemsUnitTest
     {
         //helper to assert and compare if every field of 2 acronymedItems are equal
-        public void assertCompareAcronymedItems(acronymedItem item1, acronymedItem item2)
+        public void assertCompareAcronymedItems(acronymedItemDTO item1, acronymedItemDTO item2)
         {
             Assert.AreEqual(item1.id, item2.id);
             Assert.AreEqual(item1.type, item2.type);
@@ -29,8 +29,8 @@ namespace KanbanBackendUnitTests
         public void ShouldGetAllItems()
         {
             //Arrange 
-            List<acronymedItem> expectedResult = new List<acronymedItem>();
-            expectedResult.Add(new acronymedItem
+            List<acronymedItemDTO> expectedResult = new List<acronymedItemDTO>();
+            expectedResult.Add(new acronymedItemDTO
             {
                 id = 1,
                 type = "Story",
@@ -42,11 +42,11 @@ namespace KanbanBackendUnitTests
             });
 
             //Act
-            var result = controller.Getitems() as List<acronymedItem>;
+            var result = controller.Getitems() as OkNegotiatedContentResult<List<acronymedItemDTO>>;
 
             //Assert
             Assert.IsNotNull(result);
-            assertCompareAcronymedItems(expectedResult[0], result[0]);
+            assertCompareAcronymedItems(expectedResult[0], result.Content[0]);
         }
 
         //Test to see if all items of a certain status gets returned
@@ -54,8 +54,8 @@ namespace KanbanBackendUnitTests
         public void WhenProvidedStatus_ShouldGetAllItems()
         {
             //Arrange 
-            List<acronymedItem> expectedResult = new List<acronymedItem>();
-            expectedResult.Add(new acronymedItem
+            List<acronymedItemDTO> expectedResult = new List<acronymedItemDTO>();
+            expectedResult.Add(new acronymedItemDTO
             {
                 id = 1,
                 type = "Story",
@@ -67,11 +67,11 @@ namespace KanbanBackendUnitTests
             });
 
             //Act
-            var result = controller.Getitems() as List<acronymedItem>;
+            var result = controller.Getitems() as OkNegotiatedContentResult<List<acronymedItemDTO>>;
 
             //Assert
             Assert.IsNotNull(result);
-            assertCompareAcronymedItems(expectedResult[0], result[0]);
+            assertCompareAcronymedItems(expectedResult[0], result.Content[0]);
         }
 
         //Test to see if a new item is successfully created
@@ -79,7 +79,7 @@ namespace KanbanBackendUnitTests
         public void CreateNewItem()
         {
             //Arrange
-            item newItem = new item
+            itemDTO newItem = new itemDTO
             {
                 p_id = 2,
                 type = "Story",
@@ -102,7 +102,7 @@ namespace KanbanBackendUnitTests
         public void UpdateItem()
         {
             //Arrange
-            acronymedItem updatedItem = new acronymedItem
+            acronymedItemDTO updatedItem = new acronymedItemDTO
             {
                 id = 1,
                 type = "Feature",
@@ -127,7 +127,7 @@ namespace KanbanBackendUnitTests
         public void UpdateItemStatus()
         {
             //Arrange
-            statusedItem updatedItemStatus = new statusedItem
+            statusedItemDTO updatedItemStatus = new statusedItemDTO
             {
                 id = 1,
                 status="open"
@@ -139,6 +139,10 @@ namespace KanbanBackendUnitTests
             //Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("Item status updated", result.Content);
+
+            //Cleanup
+            updatedItemStatus.status = "released";
+            controller.Updateitem(updatedItemStatus);
         }
 
     }

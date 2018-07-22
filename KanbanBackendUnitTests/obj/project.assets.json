@@ -1680,15 +1680,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
-      },
-      "KanbanBackend/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/KanbanBackend.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/KanbanBackend.dll": {}
-        }
       }
     }
   },
@@ -5912,16 +5903,11 @@
         "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
-    },
-    "KanbanBackend/1.0.0": {
-      "type": "project",
-      "path": "../KanbanBackend/KanbanBackend.csproj",
-      "msbuildProject": "../KanbanBackend/KanbanBackend.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "KanbanBackend >= 1.0.0",
+      "C:\\Users\\nadjatee\\Documents\\repos\\KanbanBackend\\KanbanBackend\\KanbanBackend.csproj",
       "MSTest.TestAdapter >= 1.2.1",
       "MSTest.TestFramework >= 1.2.1",
       "Microsoft.AspNet.WebApi.Core >= 5.2.6",
@@ -6005,6 +5991,15 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to find project information for 'C:\\Users\\nadjatee\\Documents\\repos\\KanbanBackend\\KanbanBackend\\KanbanBackend.csproj'. The project file may be invalid or missing targets required for restore.",
+      "libraryId": "C:\\Users\\nadjatee\\Documents\\repos\\KanbanBackend\\KanbanBackend\\KanbanBackend.csproj",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",
