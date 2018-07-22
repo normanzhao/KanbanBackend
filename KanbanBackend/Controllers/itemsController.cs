@@ -19,9 +19,9 @@ namespace KanbanBackend.Controllers
         private KanbanDBEntities db = new KanbanDBEntities();
 
         // GET: api/items
-        public List<acronymedItem> Getitems()
+        public IHttpActionResult Getitems()
         {
-            return db.items.Join(db.projects, i => i.p_id, p => p.id, (it,pr)=> new acronymedItem
+            return Ok(db.items.Join(db.projects, i => i.p_id, p => p.id, (it,pr)=> new acronymedItemDTO
             {
                 id = it.id,
                 type = it.type,
@@ -30,15 +30,15 @@ namespace KanbanBackend.Controllers
                 description = it.description,
                 status = it.status,
                 acronym = pr.acronym
-            }).ToList();
+            }).ToList());
 
         }
 
         // GET: api/items/status
         [Route("{status}")]
-        public List<acronymedItem> Getitems(string status)
+        public IHttpActionResult Getitems(string status)
         {
-            return db.items.Where(i => i.status == status).Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItem
+            return Ok(db.items.Where(i => i.status == status).Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItemDTO
             {
                 id = it.id,
                 type = it.type,
@@ -47,14 +47,13 @@ namespace KanbanBackend.Controllers
                 description = it.description,
                 status = it.status,
                 acronym = pr.acronym
-            }).ToList();
+            }).ToList());
 
 
         }
 
         // POST: api/items
-        [ResponseType(typeof(item))]
-        public IHttpActionResult Postitem(item itemInput)
+        public IHttpActionResult Postitem(itemDTO itemInput)
         {
             if (!ModelState.IsValid)
             {
@@ -71,14 +70,14 @@ namespace KanbanBackend.Controllers
             i.status = itemInput.status;
 
             db.items.Add(i);
-            db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok("Item created");
         }
 
         // POST: api/items/update for item updates
         [Route("update")]
-        public IHttpActionResult Updateitem(acronymedItem itemInput)
+        public IHttpActionResult Updateitem(acronymedItemDTO itemInput)
         {
             if (!ModelState.IsValid)
             {
@@ -104,7 +103,7 @@ namespace KanbanBackend.Controllers
 
             try
             {
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -122,7 +121,7 @@ namespace KanbanBackend.Controllers
 
         //POST: api/items/update for status updates only
         [Route("status-update")]
-        public IHttpActionResult Updateitem(statusedItem itemInput)
+        public IHttpActionResult Updateitem(statusedItemDTO itemInput)
         {
             if (!ModelState.IsValid)
             {
@@ -146,7 +145,7 @@ namespace KanbanBackend.Controllers
 
             try
             {
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -161,7 +160,6 @@ namespace KanbanBackend.Controllers
             }
             return Ok("Item status updated");
         }
-
 
         protected override void Dispose(bool disposing)
         {

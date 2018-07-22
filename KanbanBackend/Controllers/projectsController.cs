@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
 using KanbanBackend.Models;
 
 namespace KanbanBackend.Controllers
@@ -19,33 +13,32 @@ namespace KanbanBackend.Controllers
         private KanbanDBEntities db = new KanbanDBEntities();
 
         // GET: api/projects
-        public IQueryable<project> Getprojects()
+        public IHttpActionResult Getprojects()
         {
-            return db.projects.ToList()
-            .Select(p => new project
+            return Ok(db.projects
+            .Select(p => new projectDTO
             {
                 id = p.id,
                 acronym = p.acronym,
                 title = p.title,
                 description = p.description,
                 status = p.status
-            }).AsQueryable();
+            }).ToList());
         }
 
         // GET: api/projects/status
         [Route("released")]
-        [ResponseType(typeof(project))]
-        public IQueryable<releasedProject> Getreleased()
+        public IHttpActionResult Getreleased()
         {
-            return db.projects.ToList().Where(p => p.status == "released")
-            .Select(p => new releasedProject
+            return Ok(db.projects.Where(p => p.status == "released")
+            .Select(p => new releasedProjectDTO
             {
                 id = p.id,
                 acronym = p.acronym,
                 title = p.title,
                 description = p.description,
                 status = p.status,
-                items = db.items.ToList().Where(i => i.p_id == p.id).Select(i => new item
+                items = db.items.ToList().Where(i => i.p_id == p.id).Select(i => new itemDTO
                 {
                     id = i.id,
                     p_id = i.p_id,
@@ -55,28 +48,26 @@ namespace KanbanBackend.Controllers
                     description = i.description,
                     status = i.status
                 }).ToArray()
-            }).AsQueryable();
+            }).ToList());
         }
 
         // GET: api/projects/status
         [Route("{status}")]
-        [ResponseType(typeof(project))]
-        public IQueryable<project> Getprojects(string status)
+        public IHttpActionResult Getprojects(string status)
         {
-            return db.projects.ToList().Where(p => p.status == status)
-            .Select(p => new project
+            return Ok(db.projects.Where(p => p.status == status)
+            .Select(p => new projectDTO
             {
                 id = p.id,
                 acronym = p.acronym,
                 title = p.title,
                 description = p.description,
                 status = p.status
-            }).AsQueryable();
+            }).ToList());
         }
 
         // POST: api/projects
-        [ResponseType(typeof(project))]
-        public IHttpActionResult Postproject(project projectInput)
+        public IHttpActionResult Postproject(projectDTO projectInput)
         {
             if (!ModelState.IsValid)
             {
@@ -92,14 +83,14 @@ namespace KanbanBackend.Controllers
 
 
             db.projects.Add(p);
-            db.SaveChangesAsync();
+            db.SaveChanges();
 
             return Ok("Project created");
         }
 
         // POST: api/projects/update
         [Route("update")]
-        public IHttpActionResult Updateproject(statusedProject projectInput)
+        public IHttpActionResult Updateproject(statusedProjectDTO projectInput)
         {
 
             if (!ModelState.IsValid)
@@ -128,7 +119,7 @@ namespace KanbanBackend.Controllers
 
             try
             {
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {

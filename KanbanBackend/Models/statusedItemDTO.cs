@@ -5,7 +5,7 @@ using System.Web;
 
 namespace KanbanBackend.Models
 {
-    public partial class statusedItem
+    public partial class statusedItemDTO
     {
         public int id { get; set; }
         public string status { get; set; }
