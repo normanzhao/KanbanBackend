@@ -19,9 +19,9 @@ namespace KanbanBackend.Controllers
         private KanbanDBEntities db = new KanbanDBEntities();
 
         // GET: api/items
-        public IQueryable<acronymedItem> Getitems()
+        public List<acronymedItem> Getitems()
         {
-            return db.items.ToList().Join(db.projects, i => i.p_id, p => p.id, (it,pr)=> new acronymedItem
+            return db.items.Join(db.projects, i => i.p_id, p => p.id, (it,pr)=> new acronymedItem
             {
                 id = it.id,
                 type = it.type,
@@ -30,15 +30,15 @@ namespace KanbanBackend.Controllers
                 description = it.description,
                 status = it.status,
                 acronym = pr.acronym
-            }).AsQueryable();
+            }).ToList();
 
         }
 
         // GET: api/items/status
         [Route("{status}")]
-        public IQueryable<acronymedItem> Getitems(string status)
+        public List<acronymedItem> Getitems(string status)
         {
-            return db.items.ToList().Where(i => i.status == status).Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItem
+            return db.items.Where(i => i.status == status).Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItem
             {
                 id = it.id,
                 type = it.type,
@@ -47,14 +47,14 @@ namespace KanbanBackend.Controllers
                 description = it.description,
                 status = it.status,
                 acronym = pr.acronym
-            }).AsQueryable();
+            }).ToList();
 
 
         }
 
         // POST: api/items
         [ResponseType(typeof(item))]
-        public async Task<IHttpActionResult> Postitem(item itemInput)
+        public IHttpActionResult Postitem(item itemInput)
         {
             if (!ModelState.IsValid)
             {
@@ -71,14 +71,14 @@ namespace KanbanBackend.Controllers
             i.status = itemInput.status;
 
             db.items.Add(i);
-            await db.SaveChangesAsync();
+            db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = i.id }, i);
+            return Ok("Item created");
         }
 
         // POST: api/items/update for item updates
         [Route("update")]
-        public async Task<IHttpActionResult> Updateitem(acronymedItem itemInput)
+        public IHttpActionResult Updateitem(acronymedItem itemInput)
         {
             if (!ModelState.IsValid)
             {
@@ -105,7 +105,7 @@ namespace KanbanBackend.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -118,12 +118,12 @@ namespace KanbanBackend.Controllers
                     throw;
                 }
             }
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Item updated");
         }
 
         //POST: api/items/update for status updates only
         [Route("status-update")]
-        public async Task<IHttpActionResult> Updateitem(statusedItem itemInput)
+        public IHttpActionResult Updateitem(statusedItem itemInput)
         {
             if (!ModelState.IsValid)
             {
@@ -147,7 +147,7 @@ namespace KanbanBackend.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -160,7 +160,7 @@ namespace KanbanBackend.Controllers
                     throw;
                 }
             }
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Item status updated");
         }
 
 

@@ -19,9 +19,9 @@ namespace KanbanBackend.Controllers
         private KanbanDBEntities db = new KanbanDBEntities();
 
         // GET: api/projects
-        public IQueryable<project> Getprojects()
+        public List<project> Getprojects()
         {
-            return db.projects.ToList()
+            return db.projects
             .Select(p => new project
             {
                 id = p.id,
@@ -29,15 +29,15 @@ namespace KanbanBackend.Controllers
                 title = p.title,
                 description = p.description,
                 status = p.status
-            }).AsQueryable();
+            }).ToList();
         }
 
         // GET: api/projects/status
         [Route("released")]
         [ResponseType(typeof(project))]
-        public IQueryable<releasedProject> Getreleased()
+        public List<releasedProject> Getreleased()
         {
-            return db.projects.ToList().Where(p => p.status == "released")
+            return db.projects.Where(p => p.status == "released")
             .Select(p => new releasedProject
             {
                 id = p.id,
@@ -55,15 +55,15 @@ namespace KanbanBackend.Controllers
                     description = i.description,
                     status = i.status
                 }).ToArray()
-            }).AsQueryable();
+            }).ToList();
         }
 
         // GET: api/projects/status
         [Route("{status}")]
         [ResponseType(typeof(project))]
-        public IQueryable<project> Getprojects(string status)
+        public List<project> Getprojects(string status)
         {
-            return db.projects.ToList().Where(p => p.status == status)
+            return db.projects.Where(p => p.status == status)
             .Select(p => new project
             {
                 id = p.id,
@@ -71,12 +71,12 @@ namespace KanbanBackend.Controllers
                 title = p.title,
                 description = p.description,
                 status = p.status
-            }).AsQueryable();
+            }).ToList();
         }
 
         // POST: api/projects
         [ResponseType(typeof(project))]
-        public async Task<IHttpActionResult> Postproject(project projectInput)
+        public IHttpActionResult Postproject(project projectInput)
         {
             if (!ModelState.IsValid)
             {
@@ -92,16 +92,15 @@ namespace KanbanBackend.Controllers
 
 
             db.projects.Add(p);
-            await db.SaveChangesAsync();
+            db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = p.id }, p);
+            return Ok("Project created");
         }
 
         // POST: api/projects/update
         [Route("update")]
-        public async Task<IHttpActionResult> Updateproject(statusedProject projectInput)
+        public IHttpActionResult Updateproject(statusedProject projectInput)
         {
-            System.Diagnostics.Debug.Write("\n\n\n\nasdasdasdasd\n\n");
 
             if (!ModelState.IsValid)
             {
@@ -129,7 +128,7 @@ namespace KanbanBackend.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -143,7 +142,7 @@ namespace KanbanBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Project updated");
         }
 
         protected override void Dispose(bool disposing)

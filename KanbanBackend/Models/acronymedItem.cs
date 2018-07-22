@@ -17,7 +17,5 @@ namespace KanbanBackend.Models
         public string description { get; set; }
         public string status { get; set; }
         public string acronym { get; set; }
-
-        public virtual project project { get; set; }
     }
 }
