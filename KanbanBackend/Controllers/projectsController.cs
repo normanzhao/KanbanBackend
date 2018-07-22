@@ -19,9 +19,9 @@ namespace KanbanBackend.Controllers
         private KanbanDBEntities db = new KanbanDBEntities();
 
         // GET: api/projects
-        public List<project> Getprojects()
+        public IQueryable<project> Getprojects()
         {
-            return db.projects
+            return db.projects.ToList()
             .Select(p => new project
             {
                 id = p.id,
@@ -29,15 +29,15 @@ namespace KanbanBackend.Controllers
                 title = p.title,
                 description = p.description,
                 status = p.status
-            }).ToList();
+            }).AsQueryable();
         }
 
         // GET: api/projects/status
         [Route("released")]
         [ResponseType(typeof(project))]
-        public List<releasedProject> Getreleased()
+        public IQueryable<releasedProject> Getreleased()
         {
-            return db.projects.Where(p => p.status == "released")
+            return db.projects.ToList().Where(p => p.status == "released")
             .Select(p => new releasedProject
             {
                 id = p.id,
@@ -55,15 +55,15 @@ namespace KanbanBackend.Controllers
                     description = i.description,
                     status = i.status
                 }).ToArray()
-            }).ToList();
+            }).AsQueryable();
         }
 
         // GET: api/projects/status
         [Route("{status}")]
         [ResponseType(typeof(project))]
-        public List<project> Getprojects(string status)
+        public IQueryable<project> Getprojects(string status)
         {
-            return db.projects.Where(p => p.status == status)
+            return db.projects.ToList().Where(p => p.status == status)
             .Select(p => new project
             {
                 id = p.id,
@@ -71,7 +71,7 @@ namespace KanbanBackend.Controllers
                 title = p.title,
                 description = p.description,
                 status = p.status
-            }).ToList();
+            }).AsQueryable();
         }
 
         // POST: api/projects
