@@ -45,29 +45,53 @@ namespace KanbanBackend.Repository
             }
         }
 
-        public List<releasedProjectDTO> getReleasedProjects()
+        public List<projectWithItemsDTO> getProjectsWithItems(string status = "all")
         {
             try
-            {
-                return db.projects.Where(p => p.status == "released")
-                .Select(p => new releasedProjectDTO
+            {   if(status == "all")
                 {
-                    id = p.id,
-                    acronym = p.acronym,
-                    title = p.title,
-                    description = p.description,
-                    status = p.status,
-                    items = db.items.ToList().Where(i => i.p_id == p.id).Select(i => new itemDTO
+                    return db.projects
+                    .Select(p => new projectWithItemsDTO
                     {
-                        id = i.id,
-                        p_id = i.p_id,
-                        type = i.type,
-                        priority = i.priority,
-                        title = i.title,
-                        description = i.description,
-                        status = i.status
-                    }).ToArray()
-                }).ToList();
+                        id = p.id,
+                        acronym = p.acronym,
+                        title = p.title,
+                        description = p.description,
+                        status = p.status,
+                        items = db.items.Where(i => i.p_id == p.id).Select(i => new itemDTO
+                        {
+                            id = i.id,
+                            p_id = i.p_id,
+                            type = i.type,
+                            priority = i.priority,
+                            title = i.title,
+                            description = i.description,
+                            status = i.status
+                        })
+                    }).ToList();
+                }
+                else
+                {
+                    return db.projects.Where(p => p.status == status)
+                    .Select(p => new projectWithItemsDTO
+                    {
+                        id = p.id,
+                        acronym = p.acronym,
+                        title = p.title,
+                        description = p.description,
+                        status = p.status,
+                        items = db.items.Where(i => i.p_id == p.id).Select(i => new itemDTO
+                        {
+                            id = i.id,
+                            p_id = i.p_id,
+                            type = i.type,
+                            priority = i.priority,
+                            title = i.title,
+                            description = i.description,
+                            status = i.status
+                        })
+                    }).ToList();
+                }
             }
             catch (Exception e)
             {

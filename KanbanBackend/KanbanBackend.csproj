@@ -312,10 +312,14 @@
       <DependentUpon>KanbanDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\projectDTO.cs" />
-    <Compile Include="Models\releasedProjectDTO.cs" />
+    <Compile Include="Models\projectWithItemsDTO.cs" />
     <Compile Include="Models\statusedItemDTO.cs" />
     <Compile Include="Models\statusedProjectDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Implementations\itemsRepo.cs" />
+    <Compile Include="Repository\Implementations\projectsRepo.cs" />
+    <Compile Include="Repository\Interfaces\IitemsRepo.cs" />
+    <Compile Include="Repository\Interfaces\IprojectsRepo.cs" />
     <Compile Include="UnitTests\itemsTests.cs" />
     <Compile Include="UnitTests\projectsTest.cs" />
   </ItemGroup>

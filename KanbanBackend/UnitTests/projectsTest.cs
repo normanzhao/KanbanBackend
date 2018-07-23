@@ -49,7 +49,7 @@ namespace KanbanBackend.UnitTests
 
         //Test to see if all projects of a certain status get returned
         [TestMethod]
-        public void WhenProvidedStatus_ShouldGetStatusedProjects()
+        public void WhenProvidedStatus_ShouldGetAllReleasedProjectsAndItemsWithStatus()
         {
             //Arrange 
             List<projectDTO> expectedResult = new List<projectDTO>();
@@ -69,6 +69,30 @@ namespace KanbanBackend.UnitTests
             //Assert
             Assert.IsNotNull(result);
             assertCompareAcronymedItems(expectedResult[0], result.Content[0]);
+        }
+
+        //Test to see if all projects of a certain status get returned
+        [TestMethod]
+        public void ShouldGetAllProjectsAndItems()
+        {
+            //Arrange 
+            List<projectWithItemsDTO> expectedResult = new List<projectWithItemsDTO>();
+            expectedResult.Add(new projectWithItemsDTO
+            {
+                id = 1,
+                acronym = "UI",
+                title = "User Interface",
+                description = "User interface/front end for the Kanban board using React.",
+                status = "released"
+
+            });
+
+            //Act
+            var result = controller.Getall() as OkNegotiatedContentResult<List<projectWithItemsDTO>>;
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expectedResult[0].id, result.Content[0].id);
         }
 
         //Test to see if a new project is successfully created
@@ -92,7 +116,7 @@ namespace KanbanBackend.UnitTests
             Assert.AreEqual("Project created", result.Content);
         }
 
-        //Test to see if a project was successully updated
+        //Test to see if a project was successfully updated
         [TestMethod]
         public void UpdateProject()
         {

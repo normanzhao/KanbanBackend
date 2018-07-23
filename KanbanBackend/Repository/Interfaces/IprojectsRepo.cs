@@ -9,7 +9,7 @@ namespace KanbanBackend.Repository
     public interface IprojectsRepo
     {
         List<projectDTO> getProjects(string status = null);
-        List<releasedProjectDTO> getReleasedProjects();
+        List<projectWithItemsDTO> getProjectsWithItems(string status = "all");
         void createProject(projectDTO projectInput);
         void updateProject(statusedProjectDTO projectInput);
     }
