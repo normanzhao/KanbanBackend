@@ -49,7 +49,7 @@ namespace KanbanBackend.UnitTests
 
         //Test to see if all projects of a certain status get returned
         [TestMethod]
-        public void WhenProvidedStatus_ShouldGetAllProjects()
+        public void WhenProvidedStatus_ShouldGetStatusedProjects()
         {
             //Arrange 
             List<projectDTO> expectedResult = new List<projectDTO>();

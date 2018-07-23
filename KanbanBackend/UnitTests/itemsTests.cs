@@ -51,7 +51,7 @@ namespace KanbanBackendUnitTests
 
         //Test to see if all items of a certain status gets returned
         [TestMethod]
-        public void WhenProvidedStatus_ShouldGetAllItems()
+        public void WhenProvidedStatus_ShouldGetStatusedItems()
         {
             //Arrange 
             List<acronymedItemDTO> expectedResult = new List<acronymedItemDTO>();
