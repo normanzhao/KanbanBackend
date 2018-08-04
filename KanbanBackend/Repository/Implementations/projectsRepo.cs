@@ -10,34 +10,25 @@ namespace KanbanBackend.Repository
     {
         private KanbanDBEntities db = new KanbanDBEntities();
 
-        public List<projectDTO> getProjects(string status = null)
+        public List<projectDTO> getProjects(string status)
         {
             try
             {
-                if (status == null)
+                var projects = db.projects.Select(p => new projectDTO
                 {
-                    return db.projects
-                    .Select(p => new projectDTO
-                    {
-                        id = p.id,
-                        acronym = p.acronym,
-                        title = p.title,
-                        description = p.description,
-                        status = p.status
-                    }).ToList();
-                }
-                else
+                    id = p.id,
+                    acronym = p.acronym,
+                    title = p.title,
+                    description = p.description,
+                    status = p.status
+                }).ToList();
+
+                if (status != null)
                 {
-                    return db.projects.Where(p => p.status == status)
-                    .Select(p => new projectDTO
-                    {
-                        id = p.id,
-                        acronym = p.acronym,
-                        title = p.title,
-                        description = p.description,
-                        status = p.status
-                    }).ToList();
+                    return projects.Where(p => p.status == status).ToList();
                 }
+
+                return projects.ToList();
             }
             catch(Exception e)
             {
@@ -45,12 +36,11 @@ namespace KanbanBackend.Repository
             }
         }
 
-        public List<projectWithItemsDTO> getProjectsWithItems(string status = "all")
+        public List<projectWithItemsDTO> getProjectsWithItems(string status)
         {
             try
-            {   if(status == "all")
-                {
-                    return db.projects
+            {   
+                var projects = db.projects
                     .Select(p => new projectWithItemsDTO
                     {
                         id = p.id,
@@ -69,29 +59,13 @@ namespace KanbanBackend.Repository
                             status = i.status
                         })
                     }).ToList();
-                }
-                else
+
+                if (status != null)
                 {
-                    return db.projects.Where(p => p.status == status)
-                    .Select(p => new projectWithItemsDTO
-                    {
-                        id = p.id,
-                        acronym = p.acronym,
-                        title = p.title,
-                        description = p.description,
-                        status = p.status,
-                        items = db.items.Where(i => i.p_id == p.id).Select(i => new itemDTO
-                        {
-                            id = i.id,
-                            p_id = i.p_id,
-                            type = i.type,
-                            priority = i.priority,
-                            title = i.title,
-                            description = i.description,
-                            status = i.status
-                        })
-                    }).ToList();
+                    return projects.Where(p => p.status == status).ToList();
                 }
+
+                return projects;
             }
             catch (Exception e)
             {

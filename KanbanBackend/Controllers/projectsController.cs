@@ -15,22 +15,10 @@ namespace KanbanBackend.Controllers
     {
         private projectsRepo projRepo = new projectsRepo();
 
-        // GET: api/projects
-        public IHttpActionResult Getprojects()
-        {
-            try
-            {
-                return Ok(projRepo.getProjects());
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        // GET: api/projects/status
-        [Route("{status}")]
-        public IHttpActionResult Getprojects(string status)
+        // GET: api/projects/{status} optional status, get all projects only
+        [HttpGet]
+        [Route("{status?}")]
+        public IHttpActionResult GetProjects(string status = null)
         {
             try
             {
@@ -42,13 +30,14 @@ namespace KanbanBackend.Controllers
             }
         }
 
-        // GET: api/projects/status
-        [Route("released")]
-        public IHttpActionResult Getreleased()
+        // GET: api/projects/all/{status} optional status, get all projects alng with their associated items
+        [HttpGet]
+        [Route("all/{status?}")]
+        public IHttpActionResult GetProjectsWithItems(string status = null)
         {
             try
             {
-                return Ok(projRepo.getReleasedProjects());
+                return Ok(projRepo.getProjectsWithItems(status));
             }
             catch (Exception e)
             {
@@ -57,6 +46,7 @@ namespace KanbanBackend.Controllers
         }
 
         // POST: api/projects
+        [HttpPost]
         public IHttpActionResult Postproject(projectDTO projectInput)
         {
             try
@@ -72,6 +62,7 @@ namespace KanbanBackend.Controllers
         }
 
         // POST: api/projects/update
+        [HttpPost]
         [Route("update")]
         public IHttpActionResult Updateproject(statusedProjectDTO projectInput)
         {

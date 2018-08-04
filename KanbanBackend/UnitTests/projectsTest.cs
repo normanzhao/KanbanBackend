@@ -40,7 +40,7 @@ namespace KanbanBackend.UnitTests
             });
 
             //Act
-            var result = controller.Getprojects() as OkNegotiatedContentResult<List<projectDTO>>;
+            var result = controller.GetProjects() as OkNegotiatedContentResult<List<projectDTO>>;
 
             //Assert
             Assert.IsNotNull(result);
@@ -49,7 +49,7 @@ namespace KanbanBackend.UnitTests
 
         //Test to see if all projects of a certain status get returned
         [TestMethod]
-        public void WhenProvidedStatus_ShouldGetAllReleasedProjectsAndItemsWithStatus()
+        public void ShouldGetAllReleasedProjects()
         {
             //Arrange 
             List<projectDTO> expectedResult = new List<projectDTO>();
@@ -64,7 +64,7 @@ namespace KanbanBackend.UnitTests
             });
 
             //Act
-            var result = controller.Getprojects("released") as OkNegotiatedContentResult<List<projectDTO>>;
+            var result = controller.GetProjects("released") as OkNegotiatedContentResult<List<projectDTO>>;
 
             //Assert
             Assert.IsNotNull(result);
@@ -88,7 +88,7 @@ namespace KanbanBackend.UnitTests
             });
 
             //Act
-            var result = controller.Getall() as OkNegotiatedContentResult<List<projectWithItemsDTO>>;
+            var result = controller.GetProjectsWithItems() as OkNegotiatedContentResult<List<projectWithItemsDTO>>;
 
             //Assert
             Assert.IsNotNull(result);
