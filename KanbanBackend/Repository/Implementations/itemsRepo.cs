@@ -10,36 +10,28 @@ namespace KanbanBackend.Repository
     {
         private KanbanDBEntities db = new KanbanDBEntities();
 
+        //returns items with an optional filter for status
         public List<acronymedItemDTO> getItems(string status = null)
         {
             try
             {
-                if (status == null)
+                var items = db.items.Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItemDTO
                 {
-                    return db.items.Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItemDTO
-                    {
-                        id = it.id,
-                        type = it.type,
-                        priority = it.priority,
-                        title = it.title,
-                        description = it.description,
-                        status = it.status,
-                        acronym = pr.acronym
-                    }).ToList();
-                }
-                else
+                    id = it.id,
+                    type = it.type,
+                    priority = it.priority,
+                    title = it.title,
+                    description = it.description,
+                    status = it.status,
+                    acronym = pr.acronym
+                }).ToList();
+
+                if (status != null)
                 {
-                    return db.items.Where(i => i.status == status).Join(db.projects, i => i.p_id, p => p.id, (it, pr) => new acronymedItemDTO
-                    {
-                        id = it.id,
-                        type = it.type,
-                        priority = it.priority,
-                        title = it.title,
-                        description = it.description,
-                        status = it.status,
-                        acronym = pr.acronym
-                    }).ToList();
+                    return items.Where(i => i.status == status).ToList();
                 }
+
+                return items;
             }
             catch (Exception e)
             {
@@ -47,6 +39,7 @@ namespace KanbanBackend.Repository
             }
         }
 
+        //create a new item
         public void createItem(itemDTO itemInput)
         {
             try
@@ -69,29 +62,19 @@ namespace KanbanBackend.Repository
             }
         }
 
+        //update item, an item's informaion and status can't be logically updated at the same time on the front end
         public void updateItem(acronymedItemDTO itemInput)
         {
             try
             {
                 item i = db.items.Find(itemInput.id);
-                i.type = itemInput.type;
-                i.priority = itemInput.priority;
-                i.description = itemInput.description;
+                if(i.status == itemInput.status)
+                {
+                    i.type = itemInput.type;
+                    i.priority = itemInput.priority;
+                    i.description = itemInput.description;
+                }
 
-                db.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
-        public void updateItemStatus(statusedItemDTO itemInput)
-        {
-            try
-            {
-
-                item i = db.items.Find(itemInput.id);
                 i.status = itemInput.status;
 
                 db.SaveChanges();
@@ -101,7 +84,5 @@ namespace KanbanBackend.Repository
                 throw new Exception(e.Message);
             }
         }
-
-
     }
 }

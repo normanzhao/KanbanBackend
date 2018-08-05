@@ -42,7 +42,7 @@ namespace KanbanBackendUnitTests
             });
 
             //Act
-            var result = controller.Getitems() as OkNegotiatedContentResult<List<acronymedItemDTO>>;
+            var result = controller.GetItems() as OkNegotiatedContentResult<List<acronymedItemDTO>>;
 
             //Assert
             Assert.IsNotNull(result);
@@ -67,7 +67,7 @@ namespace KanbanBackendUnitTests
             });
 
             //Act
-            var result = controller.Getitems() as OkNegotiatedContentResult<List<acronymedItemDTO>>;
+            var result = controller.GetItems() as OkNegotiatedContentResult<List<acronymedItemDTO>>;
 
             //Assert
             Assert.IsNotNull(result);
@@ -90,7 +90,7 @@ namespace KanbanBackendUnitTests
             };
 
             //Act
-            var result = controller.Postitem(newItem) as OkNegotiatedContentResult<string>;
+            var result = controller.PostItem(newItem) as OkNegotiatedContentResult<string>;
 
             //Assert
             Assert.IsNotNull(result);
@@ -109,7 +109,7 @@ namespace KanbanBackendUnitTests
             };
 
             //Act
-            var result = controller.Updateitem(updatedItem) as OkNegotiatedContentResult<string>;
+            var result = controller.UpdateItem(updatedItem) as OkNegotiatedContentResult<string>;
 
             //Assert
             Assert.IsNotNull(result);
@@ -117,7 +117,7 @@ namespace KanbanBackendUnitTests
 
             //Cleanup
             updatedItem.type = "Story";
-            controller.Updateitem(updatedItem);
+            controller.UpdateItem(updatedItem);
 
 
         }
@@ -127,14 +127,14 @@ namespace KanbanBackendUnitTests
         public void UpdateItemStatus()
         {
             //Arrange
-            statusedItemDTO updatedItemStatus = new statusedItemDTO
+            acronymedItemDTO updatedItemStatus = new acronymedItemDTO
             {
                 id = 1,
                 status="open"
             };
 
             //Act
-            var result = controller.Updateitem(updatedItemStatus) as OkNegotiatedContentResult<string>;
+            var result = controller.UpdateItem(updatedItemStatus) as OkNegotiatedContentResult<string>;
 
             //Assert
             Assert.IsNotNull(result);
@@ -142,7 +142,7 @@ namespace KanbanBackendUnitTests
 
             //Cleanup
             updatedItemStatus.status = "released";
-            controller.Updateitem(updatedItemStatus);
+            controller.UpdateItem(updatedItemStatus);
         }
 
     }

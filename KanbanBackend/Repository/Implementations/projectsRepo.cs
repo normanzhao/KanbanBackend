@@ -10,7 +10,8 @@ namespace KanbanBackend.Repository
     {
         private KanbanDBEntities db = new KanbanDBEntities();
 
-        public List<projectDTO> getProjects(string status)
+        //returns projects with an optional filter for status
+        public List<projectDTO> getProjects(string status = null)
         {
             try
             {
@@ -36,6 +37,7 @@ namespace KanbanBackend.Repository
             }
         }
 
+        //return projects and all associated items, used for history or viewer
         public List<projectWithItemsDTO> getProjectsWithItems(string status)
         {
             try
@@ -73,6 +75,7 @@ namespace KanbanBackend.Repository
             }
         }
 
+        //create a new project
         public void createProject(projectDTO projectInput)
         {
             try
@@ -93,6 +96,7 @@ namespace KanbanBackend.Repository
             }
         }
 
+        //update project status, project information cannot be changed
         public void updateProject(statusedProjectDTO projectInput)
         {
             try

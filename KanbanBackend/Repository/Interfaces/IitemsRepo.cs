@@ -11,6 +11,5 @@ namespace KanbanBackend.Repository
         List<acronymedItemDTO> getItems(string status = null);
         void createItem(itemDTO itemInput);
         void updateItem(acronymedItemDTO itemInput);
-        void updateItemStatus(statusedItemDTO itemInput);
     }
 }

@@ -332,7 +332,6 @@
     </Compile>
     <Compile Include="Models\projectDTO.cs" />
     <Compile Include="Models\projectWithItemsDTO.cs" />
-    <Compile Include="Models\statusedItemDTO.cs" />
     <Compile Include="Models\statusedProjectDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Implementations\itemsRepo.cs" />

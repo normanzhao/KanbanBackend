@@ -19,22 +19,10 @@ namespace KanbanBackend.Controllers
     {
         private itemsRepo itRepo = new itemsRepo();
 
-        // GET: api/items
-        public IHttpActionResult Getitems()
-        {
-            try
-            {
-                return Ok(itRepo.getItems());
-            }
-            catch(Exception e)
-            {
-                return Content(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        // GET: api/items/status
-        [Route("{status}")]
-        public IHttpActionResult Getitems(string status)
+        // GET: api/items/{status} optional status, get all projects only
+        [HttpGet]
+        [Route("{status?}")]
+        public IHttpActionResult GetItems(string status = null)
         {
             try
             {
@@ -47,7 +35,8 @@ namespace KanbanBackend.Controllers
         }
 
         // POST: api/items
-        public IHttpActionResult Postitem(itemDTO itemInput)
+        [HttpPost]
+        public IHttpActionResult PostItem(itemDTO itemInput)
         {
             try
             {
@@ -61,28 +50,14 @@ namespace KanbanBackend.Controllers
         }
 
         // POST: api/items/update for item updates
+        [HttpPost]
         [Route("update")]
-        public IHttpActionResult Updateitem(acronymedItemDTO itemInput)
+        public IHttpActionResult UpdateItem(acronymedItemDTO itemInput)
         {
             try
             {
                 itRepo.updateItem(itemInput);
                 return Ok("Item updated");
-            }
-            catch (Exception e)
-            {
-                return Content(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        //POST: api/items/update for status updates only
-        [Route("status-update")]
-        public IHttpActionResult Updateitem(statusedItemDTO itemInput)
-        {
-            try
-            {
-                itRepo.updateItemStatus(itemInput);
-                return Ok("Item status updated");
             }
             catch (Exception e)
             {
